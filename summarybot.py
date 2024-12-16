@@ -15,9 +15,9 @@ chain = prompt | model
 
 def summarise():
     print("\nWelcome to Llama 3.1 for Data Analysis\n")
-    file_path = input("Please enter the file path of the data:\n")
-    
-    if file_path.lower == "exit" or file_path == None:
+    file_path = input("Please enter the file path of the data (or type 'exit' to quit):\n")
+   
+    if file_path.lower() == "exit" or file_path == None:
         exit
 
     with open(file_path, "r") as f:
