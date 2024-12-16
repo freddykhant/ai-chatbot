@@ -9,13 +9,21 @@ Here is the data in csv format: {file}
 Summary:
 """
 
-# model = OllamaLLM(model="llama3.1")
-# prompt = ChatPromptTemplate.from_template(template)
-# chain = prompt | model
+model = OllamaLLM(model="llama3.1")
+prompt = ChatPromptTemplate.from_template(template)
+chain = prompt | model
 
 def summarise():
     print("\nWelcome to Llama 3.1 for Data Analysis\n")
     file_path = input("Please enter the file path of the data:\n")
+    
+    if file_path.lower == "exit" or file_path == None:
+        exit
 
-    with open(f"{file_path}", "r") as f:
-        print(f.read())
+    with open(file_path, "r") as f:
+        content = f.read()
+        result = chain.invoke({"file": content})
+        print(result)
+
+if __name__ == "__main__":
+    summarise()
