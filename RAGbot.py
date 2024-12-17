@@ -7,27 +7,27 @@ from langchain_core.messages import HumanMessage, SystemMessage
 import os
 import getpass
 import json
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 # LLM setup
 local_llm = "llama3.2:3b"
 llm = ChatOllama(model=local_llm, temperature=0)
 llm_json_mode = ChatOllama(model=local_llm, temperature=0, format="json")
 
-# def _set_env(var: str):
-#   if not os.environ.get(var):
-#     os.environ[var] = getpass.getpass(f"{var}: ")
+def _set_env(var: str):
+  if not os.environ.get(var):
+    os.environ[var] = getpass.getpass(f"{var}: ")
   
-# _set_env("TAVILY_API_KEY")
-# os.environ["TOKENIZERS_PARALLELISM"] = "true"
+_set_env("TAVILY_API_KEY")
+os.environ["TOKENIZERS_PARALLELISM"] = "true"
 
 # # Set User Agent
 # os.environ["USER_AGENT"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
 
 # Set headers for User Agent
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"}
+# headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"}
 
 urls = [
   "https://www.travelandleisure.com/food-drink/restaurants/best-ramen-chain-restaurants-goo-ranking?",
@@ -59,3 +59,15 @@ retriever = vectorstore.as_retriever(k=k)
 # Retrieve
 result = retriever.invoke("best ramen restaurants")
 print(result)
+
+router_instructions = """
+You are an expert at routing a user question to a vectorstore or web search.
+The vectorstore contains documents related to the best ramen restaurants.
+Use the vectorstore for questions on these topics. For all else, and especially current events, use web-search.
+Return JSON with single key, datasource, that is 'websearch' or 'vectorstore' depending on the question.
+"""
+
+question = [HumanMessage(content="List 3 of the best ramen restaurants?")]
+test_vector_store = llm_json_mode.invoke([SystemMessage(content=router_instructions)] + question)
+r = json.loads(test_vector_store.content)
+print(r)
