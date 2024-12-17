@@ -42,3 +42,8 @@ streamlit run chatbot-ui.py
 
 ## **Note**
 - ensure all necessary dependencies are installed before running the chatbot.
+- assuming, you have python and pip installed, this can be done by running the command:
+
+```bash
+pip install -r requirements.txt
+```
