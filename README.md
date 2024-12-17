@@ -7,26 +7,26 @@ building a localized chatbot using **Ollama**, **Llama 3.1**, and **LangChain** 
 
 ## **How to Run**
 
-### **Version 1: Terminal-Based Chatbot**
+###Terminal-Based Chatbot**
 a simple chatbot that runs directly in your terminal.
 
 **Run it using one of the following commands:**
 ```bash
-python version1.py
+python chatbot-terminal.py
 ```
 or
 ```bash
-py version1.py
+py chatbot-terminal.py
 ```
 
 ---
 
-### **Version 2: UI-Based Chatbot**
+### **UI-Based Chatbot**
 a chatbot with a simple and interactive user interface (UI) built with **Streamlit**.
 
 **Run it using the following command:**
 ```bash
-streamlit run version2.py
+streamlit run chatbot-ui.py
 ```
 
 ---
