@@ -1,12 +1,3 @@
 langchain-ollama
 langchain-core
 streamlit
-langchain
-langchain_community
-tiktoken
-langchain-nomic
-nomic[local]
-scikit-learn
-langgraph
-tavily-python
-beautifulsoup4
