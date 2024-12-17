@@ -2,7 +2,7 @@ from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
 template = """
-You are an expert data analyst. Given the following CSV data, generate a short summary or key insights in 50 words or less. Highlight any trends, anomalies, or interesting patterns in the data. Be clear, concise, and specific. Use plain language suitable for a general audience.
+You are an expert data analyst. Given the following CSV data, generate a short summary or key insights in 50 words or less (but don't mention word limit in your answer). Highlight any trends, anomalies, or interesting patterns in the data. Be clear, concise, and specific. Use plain language suitable for a general audience.
 
 Here is the data in csv format: {file}
 
