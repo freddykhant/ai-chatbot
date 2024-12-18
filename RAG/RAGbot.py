@@ -2,6 +2,7 @@ from langchain_ollama import ChatOllama
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import SKLearnVectorStore
+#from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_nomic.embeddings import NomicEmbeddings
 from langchain_core.messages import HumanMessage, SystemMessage
 import os
@@ -32,9 +33,9 @@ os.environ["USER_AGENT"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKi
 ### Vectorstore
 
 urls = [
-  "https://ranking.goo.ne.jp/column/6555/",
-  "https://www.tasteatlas.com/ramen/wheretoeat?",
-  "https://www.petitegourmets.com/food-blog/best-ramen-noodle-restaurants-in-the-world?"
+  "https://lilianweng.github.io/posts/2023-06-23-agent/",
+  "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
+  "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
 ]
 
 # Load documents
@@ -58,10 +59,6 @@ vectorstore = SKLearnVectorStore.from_documents(
 k = min(3, len(doc_splits))  # Ensure k does not exceed available chunks
 retriever = vectorstore.as_retriever(k=k)
 
-# Retrieve
-# result = retriever.invoke("best ramen restaurants")
-# print(result)
-
 ### Router 
 
 # Prompt
@@ -78,17 +75,17 @@ test_web_search = llm_json_mode.invoke(
     [SystemMessage(content=router_instructions)]
     + [
         HumanMessage(
-            content="Who is the UFC Lightweight Champion in December 2024?"
+            content="Who is favored to win the NFC Championship game in the 2024 season?"
         )
     ]
 )
 test_web_search_2 = llm_json_mode.invoke(
     [SystemMessage(content=router_instructions)]
-    + [HumanMessage(content="List 3 of the world's best ramen restaurants.")]
+    + [HumanMessage(content="What are the models released today for llama3.2?")]
 )
 test_vector_store = llm_json_mode.invoke(
     [SystemMessage(content=router_instructions)]
-    + [HumanMessage(content="What is the best ramen restaurant in Los Angeles, California?")]
+    + [HumanMessage(content="What are the types of agent memory?")]
 )
 print(
     json.loads(test_web_search.content),
@@ -111,7 +108,7 @@ This carefully and objectively assess whether the document contains at least som
 Return JSON with single key, binary_score, that is 'yes' or 'no' score to indicate whether the document contains at least some information that is relevant to the question."""
 
 # Test
-question = "What is the best ramen restaurant in the world?"
+question = "What is Chain of thought prompting?"
 docs = retriever.invoke(question)
 doc_txt = docs[1].page_content
 doc_grader_prompt_formatted = doc_grader_prompt.format(
@@ -194,5 +191,48 @@ hallucination_grader_prompt_formatted = hallucination_grader_prompt.format(
 result = llm_json_mode.invoke(
    [SystemMessage(content=hallucination_grader_instructions)] 
    + [HumanMessage(content=hallucination_grader_prompt_formatted)]
+)
+json.loads(result.content)
+
+### Answer Grader
+
+# Answer grader instructions
+answer_grader_instructions = """You are a teacher grading a quiz. 
+
+You will be given a QUESTION and a STUDENT ANSWER. 
+
+Here is the grade criteria to follow:
+
+(1) The STUDENT ANSWER helps to answer the QUESTION
+
+Score:
+
+A score of yes means that the student's answer meets all of the criteria. This is the highest (best) score. 
+
+The student can receive a score of yes if the answer contains extra information that is not explicitly asked for in the question.
+
+A score of no means that the student's answer does not meet all of the criteria. This is the lowest possible score you can give.
+
+Explain your reasoning in a step-by-step manner to ensure your reasoning and conclusion are correct. 
+
+Avoid simply stating the correct answer at the outset."""
+
+# Grader prompt
+# Grader prompt
+answer_grader_prompt = """QUESTION: \n\n {question} \n\n STUDENT ANSWER: {generation}. 
+
+Return JSON with two two keys, binary_score is 'yes' or 'no' score to indicate whether the STUDENT ANSWER meets the criteria. And a key, explanation, that contains an explanation of the score."""
+
+# Test
+question = "What are the vision models released today as part of Llama 3.2?"
+answer = "The Llama 3.2 models released today include two vision models: Llama 3.2 11B Vision Instruct and Llama 3.2 90B Vision Instruct, which are available on Azure AI Model Catalog via managed compute. These models are part of Meta's first foray into multimodal AI and rival closed models like Anthropic's Claude 3 Haiku and OpenAI's GPT-4o mini in visual reasoning. They replace the older text-only Llama 3.1 models."
+
+# Test using question and generation from above
+answer_grader_prompt_formatted = answer_grader_prompt.format(
+   question=question, generation=answer
+)
+result= llm_json_mode.invoke(
+   [SystemMessage(content=answer_grader_instructions)]
+   + [HumanMessage(content=answer_grader_prompt_formatted)]
 )
 json.loads(result.content)
