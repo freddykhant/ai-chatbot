@@ -22,10 +22,10 @@ for message in st.session_state.messages:
     st.chat_message(message['role']).markdown(message['content'])
 
 # Get input from user
-input_text = st.chat_input("Chat with Llama 3.1")
+input_text = st.chat_input("Chat with Llama 3.2")
 
 # Set up our LLM model with Ollama
-model = OllamaLLM(model="llama3.1")
+model = OllamaLLM(model="llama3.2:1b") # adjust model version as needed
 prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
