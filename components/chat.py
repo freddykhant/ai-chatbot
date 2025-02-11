@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.setup import chat
+from utils.setup import chat_context
 
 def chatbot():
   if prompt := st.chat_input("How can I help?"):
@@ -14,7 +14,7 @@ def chatbot():
     with st.chat_message("assistant"):
       with st.spinner("Thinking..."):
         response = st.write_stream(
-          chat(
+          chat_context(
             prompt=prompt,
             retriever=st.session_state["retriever"]
           )
