@@ -14,11 +14,13 @@ def chatbot():
     with st.chat_message("assistant"):
       with st.spinner("Thinking..."):
         response = st.write_stream(
-          chat_context(
-            prompt=prompt,
-            retriever=st.session_state["retriever"]
-          )
+            chat_context(
+                prompt=prompt,
+                retriever=st.session_state["retriever"],
+                llm=st.session_state["llm"],
+            )
         )
+
 
     st.session_state["messages"].append({"role": "assistant", "content": response})
   

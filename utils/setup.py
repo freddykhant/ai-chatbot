@@ -25,10 +25,9 @@ def create_embeddings():
 def create_text_splitter():
   return RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 
-def chat_context(prompt: str, retriever):
+def chat_context(prompt, retriever, llm):
   docs = retriever.invoke(prompt)
   docs_txt = format_docs(docs)
-  generation = chat_prompt.format(context=docs_txt, question=prompt)
+  chat_prompt_formatted = chat_prompt.format(context=docs_txt, question=prompt)
 
-  return generation.content
-  
+  return (chunk.content for chunk in llm.stream(chat_prompt_formatted))
