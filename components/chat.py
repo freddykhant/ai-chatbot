@@ -10,4 +10,11 @@ def chatbot():
     with st.chat_message("user"):
       st.markdown(prompt)
 
+    with st.chat_message("assistant"):
+      with st.spinner("Thinking..."):
+        response = st.write_stream(
+          # chat context
+        )
+
+    st.session_state["messages"].append({"role": "assistant", "content": response})
     

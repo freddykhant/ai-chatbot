@@ -23,3 +23,6 @@ def create_embeddings():
 
 def create_text_splitter():
   return RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+
+def context_chat(prompt: str, retriever):
+  docs_text = retriever.invoke(prompt)
