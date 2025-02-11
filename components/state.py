@@ -22,3 +22,7 @@ def set_initial_state():
 
   if "retriever" not in st.session_state:
     st.session_state["retriever"] = None
+
+  ### files
+  if "files" not in st.session_state:
+    st.session_state["files"] = []
