@@ -11,14 +11,13 @@ def load_documents(directory: str):
     
   return documents
 
-def create_vector_store(documents, embeddings):
+def create_vector_store(_documents, _embeddings):
   text_splitter = create_text_splitter()
-  chunks = text_splitter.split_documents(documents)
-  vectorstore = Chroma.from_documents(
-    documents=chunks,
-    embeddings=embeddings,
-    persist_directory="vectorstore"
-  )
+  chunks = text_splitter.split_documents(_documents)
+  
+  # Create the Chroma vector store with the embedding function
+  vectorstore = Chroma(persist_directory="vectorstore", embedding_function=_embeddings)
+  vectorstore.add_documents(documents=chunks)
   
   return vectorstore
 
@@ -31,4 +30,4 @@ def create_retriever(documents, embeddings):
 
   st.session_state["retriever"] = retriever
 
-  return retriever  
+  return retriever

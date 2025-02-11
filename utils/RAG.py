@@ -20,8 +20,7 @@ def rag_pipeline(uploaded_files: list=None):
   st.session_state["llm"] = llm
   st.caption("Model loaded ✅")
 
-  embedding_model = st.session_state["embedding_model"]
-  embeddings = create_embeddings(embedding_model)
+  embeddings = create_embeddings()
 
   # load documents
   if st.session_state["documents"] is not None and len(st.session_state["documents"]) > 0:
