@@ -2,6 +2,7 @@ import os
 from langchain_community.document_loaders import DirectoryLoader
 from setup import create_llm, create_embeddings, create_text_splitter
 from langchain_chroma import Chroma
+import streamlit as st
 
 def load_documents(directory: str):
   documents = []
@@ -29,5 +30,7 @@ def create_retriever(documents):
     search_type="similarity_score_threshold",
     search_kwargs={"k": 20, "score_threshold": 0.1},
   )
+
+  st.session_state["retriever"] = retriever
 
   return retriever  
