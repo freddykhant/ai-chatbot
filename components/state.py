@@ -5,6 +5,14 @@ def set_initial_state():
   if "embedding_model" not in st.session_state:
     st.session_state["embedding_model"] = "nomic-embed-text-v1.5"
 
+  if "messages" not in st.session_state:
+    st.session_state["messages"] = [
+      {
+        "role": "assistant",
+        "content": "Hello! I'm the LLama 3.1 Chatbot. How can I help you today?",
+      }
+    ]
+
   ### RAG ###
   if "llm" not in st.session_state:
     st.session_state["llm"] = None
