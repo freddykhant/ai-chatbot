@@ -21,3 +21,9 @@ def website():
   if add_button and url_text != "":
     st.session_state["websites"].append(ensure_https(url_text))
     st.session_state["websites"] = sorted(set(st.session_state["websites"]))
+
+  if st.session_state["websites"] != []:
+    st.markdown(f"<p>Website(s)</p>", unsafe_allow_html=True)
+    for site in st.session_state["websites"]:
+      st.caption(f"- {site}")
+    st.write("")
