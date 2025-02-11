@@ -27,3 +27,16 @@ def website():
     for site in st.session_state["websites"]:
       st.caption(f"- {site}")
     st.write("")
+
+  process_button = st.button("Process", key="process")
+
+  if process_button:
+    loader = WebBaseLoader(st.session_state["websites"])
+    docs = loader.load()
+
+    if len(docs) > 0:
+      st.session_state["documents"] = docs
+
+      with st.spinner("Processing"):
+        rag.rag_pipeline()
+        st.write("Your website is ready. Let's chat!")
