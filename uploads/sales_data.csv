@@ -1,0 +1,6 @@
+Order ID,Product,Category,Quantity,Unit Price,Total Sales,Date,Customer Region
+101,Laptop,Electronics,2,1200,2400,2024-01-10,North
+102,Smartphone,Electronics,1,800,800,2024-01-15,West
+103,Headphones,Accessories,3,150,450,2024-02-01,East
+104,Monitor,Electronics,2,300,600,2024-02-10,South
+105,Keyboard,Accessories,4,50,200,2024-03-05,Central
