@@ -6,16 +6,14 @@ import streamlit as st
 
 def load_documents(directory: str):
   documents = []
-  for filename in os.listdir(directory):
-    file_path = os.path.join(directory, filename)
-    loader = DirectoryLoader(file_path)
-    documents += loader.load()
+  loader = DirectoryLoader(directory)
+  documents += loader.load()
     
   return documents
 
 def create_vector_store(documents, embeddings):
   text_splitter = create_text_splitter()
-  chunks = text_splitter.split(documents)
+  chunks = text_splitter.split_documents(documents)
   vectorstore = Chroma.from_documents(
     documents=chunks,
     embeddings=embeddings,

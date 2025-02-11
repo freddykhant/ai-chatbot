@@ -7,3 +7,4 @@ langchain_nomic
 nomic[local]
 pypdf
 streamlit
+unstructured
