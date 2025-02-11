@@ -1,5 +1,5 @@
-from setup import create_llm, create_embeddings
-from retriever import load_documents, create_retriever
+from utils.setup import create_llm, create_embeddings
+from utils.retriever import load_documents, create_retriever
 import os
 import streamlit as st
 
