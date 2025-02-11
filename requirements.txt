@@ -1,5 +1,9 @@
 langchain
 langchain_ollama
 langchain_core
-streamlit
+langchain_community
+langchain_chroma
 langchain_nomic
+nomic[local]
+pypdf
+streamlit

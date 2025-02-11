@@ -4,9 +4,9 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
 
 # variables
-model = "llama3.1:8b"
+# model = "llama3.1:8b"
 
-emb_model = "nomic-embed-text-v1.5"
+# emb_model = "nomic-embed-text-v1.5"
 
 chat_prompt = PromptTemplate.from_template(
   """
@@ -21,11 +21,11 @@ chat_prompt = PromptTemplate.from_template(
 
 
 # functions for setup
-def create_llm(model: str):
-  return ChatOllama(model=model, temperature=0)
+def create_llm():
+  return ChatOllama(model="llama3.1:8b", temperature=0)
 
-def create_embeddings(model: str):
-  return NomicEmbeddings(model=model, inference_mode="local")
+def create_embeddings():
+  return NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
 
 def create_text_splitter():
   return RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
