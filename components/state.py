@@ -23,3 +23,6 @@ def set_initial_state():
   ### files
   if "files" not in st.session_state:
     st.session_state["files"] = []
+    
+  if "websites" not in st.session_state:
+        st.session_state["websites"] = []
