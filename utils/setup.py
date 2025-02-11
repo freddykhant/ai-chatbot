@@ -2,6 +2,7 @@ from langchain_ollama import ChatOllama
 from langchain_nomic.embeddings import NomicEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
+from helper import format_docs
 
 chat_prompt = PromptTemplate.from_template(
   """
@@ -24,5 +25,10 @@ def create_embeddings():
 def create_text_splitter():
   return RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 
-def context_chat(prompt: str, retriever):
-  docs_text = retriever.invoke(prompt)
+def chat(prompt: str, retriever):
+  docs = retriever.invoke(prompt)
+  docs_txt = format_docs(docs)
+  generation = chat_prompt.format(context=docs_txt, question=prompt)
+
+  return generation.content
+  

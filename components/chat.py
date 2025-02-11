@@ -1,4 +1,5 @@
 import streamlit as st
+from utils.setup import chat
 
 def chatbot():
   if prompt := st.chat_input("How can I help?"):
@@ -13,8 +14,11 @@ def chatbot():
     with st.chat_message("assistant"):
       with st.spinner("Thinking..."):
         response = st.write_stream(
-          # chat context
+          chat(
+            prompt=prompt,
+            retriever=st.session_state["retriever"]
+          )
         )
 
     st.session_state["messages"].append({"role": "assistant", "content": response})
-    
+  
