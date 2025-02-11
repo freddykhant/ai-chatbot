@@ -1,6 +1,6 @@
 import os
 from langchain_community.document_loaders import DirectoryLoader
-from setup import create_llm, create_embeddings, create_text_splitter
+from setup import creatllm, create_embeddings, create_text_splitter
 from langchain_chroma import Chroma
 import streamlit as st
 

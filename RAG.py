@@ -1,4 +1,7 @@
+from setup import create_llm, create_embeddings
+from retriever import load_documents, create_retriever
 import os
+import streamlit as st
 
 def rag_pipeline(uploaded_files: list=None):
   if uploaded_files is not None:
@@ -8,3 +11,13 @@ def rag_pipeline(uploaded_files: list=None):
         os.makedirs(save_dir)
       with open(os.path.join(save_dir, uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
+
+  llm = create_llm()
+  st.session_state["llm"] = llm
+
+  save_dir = os.getcwd() + "/uploads"
+  documents = load_documents(save_dir)
+  st.session_state["documents"] = documents
+
+  create_retriever(st.session_state["documents"])
+
