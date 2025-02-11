@@ -24,8 +24,8 @@ def create_vector_store(documents, embeddings):
   
   return vectorstore
 
-def create_retriever(documents):
-  vectorstore = create_vector_store(documents)
+def create_retriever(documents, embeddings):
+  vectorstore = create_vector_store(documents, embeddings)
   retriever = vectorstore.as_retriever(
     search_type="similarity_score_threshold",
     search_kwargs={"k": 20, "score_threshold": 0.1},
