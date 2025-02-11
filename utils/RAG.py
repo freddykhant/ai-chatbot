@@ -15,7 +15,7 @@ def rag_pipeline(uploaded_files: list=None):
   llm = create_llm()
   st.session_state["llm"] = llm
 
-  embeddings = st.session_state["embeddings"]
+  embeddings = st.session_state["embedding_model"]
 
   save_dir = os.getcwd() + "/uploads"
   documents = load_documents(save_dir)
