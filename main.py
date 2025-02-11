@@ -8,6 +8,6 @@ set_initial_state()
 set_page_header()
 
 for msg in st.session_state["messages"]:
-  st.chat_message(msg["role"], msg["content"])
+  st.chat_message(msg["role"]).write(msg["content"])
 
 chatbot()

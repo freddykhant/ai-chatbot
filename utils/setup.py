@@ -2,7 +2,7 @@ from langchain_ollama import ChatOllama
 from langchain_nomic.embeddings import NomicEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
-from helper import format_docs
+from utils.helper import format_docs
 
 chat_prompt = PromptTemplate.from_template(
   """
