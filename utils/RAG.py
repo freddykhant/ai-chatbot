@@ -1,4 +1,4 @@
-from utils.setup import create_llm
+from utils.setup import create_llm, create_embeddings
 from utils.retriever import load_documents, create_retriever
 from utils.helper import save_uploaded_files
 import os
@@ -15,11 +15,17 @@ def rag_pipeline(uploaded_files: list=None):
 
   llm = create_llm()
   st.session_state["llm"] = llm
+  st.caption("Model loaded ✅")
 
-  embeddings = st.session_state["embedding_model"]
+  embedding_model = st.session_state["embedding_model"]
+  embeddings = create_embeddings(embedding_model)
 
-  save_dir = os.getcwd() + "/uploads"
-  documents = load_documents(save_dir)
-  st.session_state["documents"] = documents
+  if st.session_state["documents"] is not None and len(st.session_state["documents"]) > 0:
+    st.caption("Documents Processed ✅")
+  else:
+    save_dir = os.getcwd() + "/uploads"
+    documents = load_documents(save_dir)
+    st.session_state["documents"] = documents
+    st.caption("Data Processed ✅")
 
   create_retriever(st.session_state["documents"], embeddings)
