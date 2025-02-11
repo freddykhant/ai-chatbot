@@ -1,6 +1,6 @@
 import os
 from langchain_community.document_loaders import DirectoryLoader
-from setup import creatllm, create_embeddings, create_text_splitter
+from setup import create_text_splitter
 from langchain_chroma import Chroma
 import streamlit as st
 
@@ -13,12 +13,12 @@ def load_documents(directory: str):
     
   return documents
 
-def create_vector_store(documents):
+def create_vector_store(documents, embeddings):
   text_splitter = create_text_splitter()
   chunks = text_splitter.split(documents)
   vectorstore = Chroma.from_documents(
     documents=chunks,
-    embeddings=create_embeddings(),
+    embeddings=embeddings,
     persist_directory="vectorstore"
   )
   
