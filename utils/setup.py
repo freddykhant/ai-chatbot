@@ -31,3 +31,6 @@ def chat_context(prompt, retriever, llm):
   chat_prompt_formatted = chat_prompt.format(context=docs_txt, question=prompt)
 
   return (chunk.content for chunk in llm.stream(chat_prompt_formatted))
+
+def chat(prompt, llm):
+  return (chunk.content for chunk in llm.stream(prompt))
