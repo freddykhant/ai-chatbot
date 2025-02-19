@@ -6,4 +6,4 @@ langchain_chroma
 langchain_nomic
 nomic[local]
 streamlit
-unstructured
+unstructured[pdf]
